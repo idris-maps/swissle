@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js';
-import type { Canton } from './data'
+import type { Canton } from '../data'
 
 interface Props {
   canton: Canton
