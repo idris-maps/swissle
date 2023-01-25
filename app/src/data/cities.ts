@@ -53,7 +53,6 @@ export const cities = [
   "La Chaux-de-Fonds",
   "Lancy",
   "Langenthal",
-  "Le",
   "Lenzburg",
   "Locarno",
   "Lugano",
