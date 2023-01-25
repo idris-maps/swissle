@@ -9,7 +9,6 @@ const QuestionGeo = ({ canton, lang, onAnswered }: QuestionProps): JSX.Element =
     <h3>{text.guessGeo[lang]}</h3>
     <Map path={canton.path} />
     <AnswerInput
-      id="geo"
       choices={cantonNames[lang]}
       isCorrect={d => d === canton.name[lang]} 
       onAnswered={onAnswered}

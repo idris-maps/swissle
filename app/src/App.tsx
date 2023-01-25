@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact'
+import { h } from 'preact'
 import { useState } from 'preact/hooks'
 import { If } from './components/utils'
 import Question from './components/Question'

@@ -8,7 +8,6 @@ const QuestionCapital = ({ canton, lang, onAnswered }: QuestionProps): JSX.Eleme
     <h3>{canton.name[lang]}</h3>
     <h4>{text.guessCapital[lang]}</h4>
     <AnswerInput
-      id="capital"
       choices={cities[lang]}
       isCorrect={d => d === canton.capital[lang]} 
       onAnswered={onAnswered}

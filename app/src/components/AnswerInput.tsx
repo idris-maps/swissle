@@ -6,7 +6,6 @@ import InputChoice from './InputChoice'
 interface Props {
   choices: string[]
   expectedCorrect?: number
-  id: string
   isCorrect: (d: string) => boolean 
   onAnswered: (pass: boolean) => void
   onChoice?: (d: string) => void
@@ -34,7 +33,6 @@ const AnswerInput = (props: Props): JSX.Element => {
         onFull={props.onAnswered}
       />
       <InputChoice
-        id='capital'
         choices={choices}
         onSelect={onSelect}
       />

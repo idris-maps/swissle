@@ -30,7 +30,6 @@ const QuestionNeighbors = ({ canton, lang, onAnswered }: QuestionProps): JSX.Ele
         />
       </div>
       <AnswerInput
-        id="geo"
         choices={cantonNames[lang]}
         expectedCorrect={4}
         isCorrect={d => names.includes(d)} 

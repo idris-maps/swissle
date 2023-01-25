@@ -71,6 +71,12 @@ button {
   border: solid 1px var(--color-primary);
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 .app {
   display: flex;
   align-items: center;
@@ -85,11 +91,35 @@ button {
   margin-top: 2em;
 }
 
+.input-choice {
+  display: block;
+  position: relative;
+  width: 100%;
+}
 
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.input-choice ul {
+  position: absolute;
+  bottom: 100%;
+  width: 100%;
+}
+
+.input-choice li {
+  width: 100%;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 0.2em;
+  border: solid 1px var(--color);
+  background-color: var(--bg-color);
+}
+
+.input-choice li:hover,
+.input-choice li:focus {
+  background-color: var(--color-primary);
+  color: var(--bg-color);
+}
+
+.input-choice button {
+  margin-top: 0.5em;
 }
 
 .answer-list {

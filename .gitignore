@@ -1,4 +1,3 @@
 app/node_modules
-app/dist
-data/node_modules
-data/svgs/*
+app/dist/script.js
+app/dist/script.js.map
