@@ -12,7 +12,7 @@ interface Props {
 
 const StartPage = ({ lang, setLang, onStart }: Props) => (
   <Fragment>
-    <h2>SWISSL</h2>
+    <h2>SWISSLE</h2>
     <MapCH />
     <SelectLanguage lang={lang} setLang={setLang} />
     <StartButton lang={lang} onClick={onStart} />
