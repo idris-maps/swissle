@@ -2,28 +2,26 @@ import { h } from 'preact'
 import { useState } from 'preact/hooks'
 import { If } from './components/utils'
 import Question from './components/Question'
-import CorrectAnswer from './components/CorrectAnswer'
+import CorrectAnswer, { CorrectA } from './components/CorrectAnswer'
 import StartPage from './components/StartPage'
 import { getRandomCanton, getBrowserLang, Lang, Canton } from './data'
 
 const App = () => {
   const [lang, setLang] = useState<Lang>(getBrowserLang())
   const [canton, setCanton] = useState<Canton>()
-  const [failedAnswer, setFailedAnswer] = useState<string|string[]|number|undefined>(undefined)
+  const [failedAnswer, setFailedAnswer] = useState<CorrectA>(undefined)
 
   const onStart = () => {
     setFailedAnswer(undefined)
     setCanton(getRandomCanton())
   }
 
-  const onEnd = ({ pass, answer }: { pass: boolean, answer?: string | number | string[] }) => {
-    console.log({ pass, answer })
+  const onEnd = ({ pass, answer }: { pass: boolean, answer?: CorrectA }) => {
     if (!pass && answer) {
       setFailedAnswer(answer)
     } else {
       setFailedAnswer(undefined)
       setCanton(undefined)
-      console.log({ canton, failedAnswer })
     }
   }
 

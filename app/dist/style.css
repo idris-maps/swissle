@@ -168,7 +168,7 @@ ul {
 
 .neighbors {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   row-gap: 0.5em;
   column-gap: 0.5em;
 }
@@ -183,6 +183,22 @@ ul {
   margin-top: 1em;
   border-radius: 0.5em;
   cursor: pointer;
+}
+
+.flags {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 1em;
+  column-gap: 1em;
+}
+
+.selected-flag svg {
+  opacity: 0.1;
+}
+
+.flag-answer {
+  width: 40%;
+  margin: auto;
 }
 
 .celebration {

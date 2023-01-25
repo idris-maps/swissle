@@ -24,6 +24,11 @@ export const text = {
     local: 'How many inhabitants?',
     fr: 'Quel est le nombre d\'habitants?'
   },
+  guessFlag: {
+    de: 'Welches ist das Wappen?',
+    local: 'Which is the flag?',
+    fr: 'Quel est le drapeau?'
+  },
   answerWas: {
     de: 'Die richtige antwort war:',
     local: 'The correct answer was:',

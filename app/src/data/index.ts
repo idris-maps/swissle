@@ -1,6 +1,7 @@
 export * from './cantons'
 export * from './utils'
 export * from './text'
+import { flags } from './flags'
 import { cantons } from './cantons'
 import { cities as _cities } from './cities'
 import { getRandom } from './utils'
@@ -46,3 +47,27 @@ export const getCantonById = (id: string) => {
 export const getCantonName = (lang: Lang, id: string) => getCantonById(id).name[lang]
 
 export const getRandomCanton = () => getRandom(cantons)
+
+const abbrevs = cantons.map(d => d.id)
+
+const getRandomAbbrevs = (n: number, current: string[] = []): string[] => {
+  const res = Array.from(new Set([...current, getRandom(abbrevs)]))
+  if (res.length === n) { return res }
+  return getRandomAbbrevs(n, res)
+}
+
+export interface Flag {
+  abbrev: string
+  viewBox: string
+  content: string
+}
+
+export const getFlags = (id: string): Flag[] =>
+  getRandomAbbrevs(8, [id])
+    .map(abbrev => ({ abbrev, ...flags[abbrev] }))
+    .sort(() => Math.random() > 0.5 ? 1 : -1)
+
+export const getFlag = (id: string): Flag => ({
+  abbrev: id,
+  ...flags[id],
+})
