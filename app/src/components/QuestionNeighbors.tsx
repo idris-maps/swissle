@@ -1,58 +1,44 @@
-import { Component, createSignal, createMemo, For } from 'solid-js'
+import { h, JSX, Fragment } from 'preact'
+import AnswerInput from './AnswerInput'
 import Map from './Map'
-import InputChoice from './InputChoice'
-import { canton, getLang } from '../store'
-import { cantonNames, getCantonById, cantonNameMap } from '../data'
+import { For } from './utils'
+import type { QuestionProps } from './Question'
+import { cantonNames, getCantonById, cantonAbbrevMap, text } from '../data'
+import { useState } from 'preact/hooks'
 
-const QuestionNeighbors: Component = () => {
-  const expected = canton.neighbors.map(d => [d, cantonNameMap[d][getLang()]])
-  const [attempts, setAttempts] = createSignal<{name:string,id?:string}[]>([])
-  const choices = createMemo(() =>
-    cantonNames[getLang()].filter(d => !attempts().map(d => d.name).includes(d))
-  )
-  const correct = createMemo(() => attempts().filter(d => Boolean(d.id)))
-  const onSelect = (answer: string) => {
-    const isCorrect = expected.find(d => d[1] === answer)
-    if (isCorrect) {
-      if (correct().length === expected.length - 1) {
-        console.log('pass')
-        return
-      }
-      setAttempts(arr => [...arr, { name: answer, id: isCorrect[0] }])
-      return
-    }
+const QuestionNeighbors = ({ canton, lang, onAnswered }: QuestionProps): JSX.Element => {
+  const names = canton.neighbors.map(d => getCantonById(d).name[lang])
+  const [selected, setSelected] = useState<string[]>([])
 
-    if (attempts().length > 6) {
-      console.log('fail')
-      return
-    }
-
-    setAttempts(arr => [...arr, { name: answer }])
+  const onChoice = (res: string) => {
+    setSelected(d => [...d, res])
   }
 
   return (
-    <>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr)">
-        <For each={canton.neighbors}>
-          {d => <Map canton={getCantonById(d)} />}
-        </For>
-      </div>
-      <InputChoice
-        id="geo"
-        onSelect={onSelect}
-        choices={choices()}
-      />
-      <ul>
-        <For each={attempts()}>
-          {(d, i) => (
-            <li data-index={i}>
-              <span>{d.name}</span>
-              <span>{canton.neighbors.includes(d.id || '')}</span>
-            </li>
+    <Fragment>
+      <h3>{canton.name[lang]}</h3>
+      <h4>{text.guessNeighbors[lang]}</h4>
+      <div class="neighbors">
+        <For
+          each={canton.neighbors}
+          render={id => (
+            <Map
+              path={getCantonById(id).path}
+              selected={selected.map(d => cantonAbbrevMap[d]).includes(id)}
+            />
           )}
-        </For>
-      </ul>
-    </>
+        />
+      </div>
+      <AnswerInput
+        id="geo"
+        choices={cantonNames[lang]}
+        expectedCorrect={4}
+        isCorrect={d => names.includes(d)} 
+        onAnswered={onAnswered}
+        onChoice={onChoice}
+        slots={6}
+      />
+    </Fragment>
   )
 }
 

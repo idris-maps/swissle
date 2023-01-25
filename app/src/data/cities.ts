@@ -38,7 +38,6 @@ export const cities = [
   "Freienbach",
   "Gland",
   "Gossau",
-  "Gossau",
   "Grenchen",
   "Hinwil",
   "Horgen",
@@ -51,7 +50,6 @@ export const cities = [
   "Köniz",
   "Küsnacht",
   "Küssnacht",
-  "La",
   "La Chaux-de-Fonds",
   "Lancy",
   "Langenthal",
@@ -139,4 +137,3 @@ export const cities = [
   "Zollikofen",
   "Zollikon"
 ]
-

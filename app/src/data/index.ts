@@ -1,6 +1,9 @@
 export * from './cantons'
+export * from './utils'
+export * from './text'
 import { cantons } from './cantons'
 import { cities as _cities } from './cities'
+import { getRandom } from './utils'
 
 export type Lang = 'de' | 'fr' | 'local'
 
@@ -27,6 +30,13 @@ export const cantonNameMap = cantons.reduce((r: Record<string,Record<Lang,string
   return r
 }, {})
 
+export const cantonAbbrevMap = cantons.reduce((r: Record<string,string>, d) => {
+  r[d.name.de] = d.id
+  r[d.name.fr] = d.id
+  r[d.name.local] = d.id
+  return r
+}, {})
+
 export const getCantonById = (id: string) => {
   const d = cantons.find(d => d.id === id)
   if (!d) { throw new Error(`Canton id ${id} does not exist`) }
@@ -34,3 +44,5 @@ export const getCantonById = (id: string) => {
 }
 
 export const getCantonName = (lang: Lang, id: string) => getCantonById(id).name[lang]
+
+export const getRandomCanton = () => getRandom(cantons)

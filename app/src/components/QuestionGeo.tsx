@@ -1,39 +1,21 @@
-import { Component, createSignal, createMemo, For } from 'solid-js'
+import { h, JSX, Fragment } from 'preact'
+import AnswerInput from './AnswerInput'
 import Map from './Map'
-import InputChoice from './InputChoice'
-import { canton, getLang } from '../store'
-import { cantonNames } from '../data'
+import type { QuestionProps } from './Question'
+import { cantonNames, text } from '../data'
 
-const QuestionGeo: Component = () => {
-  const [attempts, setAttempts] = createSignal<string[]>([])
-  const choices = createMemo(() => cantonNames[getLang()].filter(d => !attempts().includes(d)))
-  const onSelect = (d: string) => {
-    if (d === canton.name[getLang()]) {
-      console.log('pass')
-      return
-    }
-    if (attempts().length > 1) {
-      console.log('fail')
-      return
-    }
-    setAttempts(arr => [...arr, d])
-  }
-
-  return (
-    <>
-      <Map canton={canton} />
-      <InputChoice
-        id="geo"
-        onSelect={onSelect}
-        choices={choices()}
-      />
-      <ul>
-        <For each={attempts()}>
-          {(d, i) => <li data-index={i}>{d}</li>}
-        </For>
-      </ul>
-    </>
-  )
-}
+const QuestionGeo = ({ canton, lang, onAnswered }: QuestionProps): JSX.Element => (
+  <Fragment>
+    <h3>{text.guessGeo[lang]}</h3>
+    <Map path={canton.path} />
+    <AnswerInput
+      id="geo"
+      choices={cantonNames[lang]}
+      isCorrect={d => d === canton.name[lang]} 
+      onAnswered={onAnswered}
+      slots={3}
+    />
+ </Fragment>
+)
 
 export default QuestionGeo

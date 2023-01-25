@@ -1,5 +1,6 @@
-import { For } from 'solid-js'
-import type { Component } from 'solid-js';
+import { h, JSX, Fragment } from 'preact'
+import { For } from './utils'
+import { useFocus } from './hooks'
 
 interface Props {
   id: string
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const onInput = ({ choices, onSelect }: Props) => {
-  return (e: InputEvent & { currentTarget: HTMLInputElement }) => {
+  return (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
     const value = e.currentTarget.value
     if (choices.includes(value)) {
       onSelect(value)
@@ -17,24 +18,24 @@ const onInput = ({ choices, onSelect }: Props) => {
   }
 }
 
-const InputChoice: Component<Props> = props => (
-  <>
-    <input
-      list={props.id}
-      onInput={onInput(props)}
-    />
-    <pre>{JSON.stringify(props.choices)}</pre>
-    <datalist id={props.id}>
-      <For each={props.choices}>
-        {(d, i) => (
-          <option
-            data-index={i()}
-            value={d}
-          />
-        )}
-      </For>
-    </datalist>
-  </>
-)
+const InputChoice = (props: Props) => {
+  const ref = useFocus<HTMLInputElement>()
+
+  return (
+    <Fragment>
+      <input
+        list={props.id}
+        onInput={onInput(props)}
+        ref={ref}
+      />
+      <datalist id={props.id}>
+        <For
+          each={props.choices}
+          render={d => <option value={d} />}
+        />
+      </datalist>
+    </Fragment>
+  )
+}
 
 export default InputChoice
