@@ -1,7 +1,8 @@
 {
   "scripts": {
     "build": "esbuild src/index.ts --outfile=dist/script.js --bundle --minify",
-    "dev": "esbuild src/index.ts --outfile=dist/script.js --bundle --sourcemap --watch"
+    "dev": "esbuild src/index.ts --outfile=dist/script.js --bundle --sourcemap --watch",
+    "publish": "npm run build & surge dist swissle.surge.sh"
   },
   "dependencies": {
     "esbuild": "^0.17.4",

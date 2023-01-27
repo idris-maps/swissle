@@ -4,25 +4,32 @@ import { If } from './components/utils'
 import Question from './components/Question'
 import CorrectAnswer, { CorrectA } from './components/CorrectAnswer'
 import StartPage from './components/StartPage'
+import Success from './components/Success'
 import { getRandomCanton, getBrowserLang, Lang, Canton } from './data'
 
 const App = () => {
   const [lang, setLang] = useState<Lang>(getBrowserLang())
   const [canton, setCanton] = useState<Canton>()
   const [failedAnswer, setFailedAnswer] = useState<CorrectA>(undefined)
+  const [success, setSuccess] = useState<boolean>(false)
 
   const onStart = () => {
     setFailedAnswer(undefined)
-    setCanton(getRandomCanton())
+    setCanton(getRandomCanton(canton ? canton.id : undefined))
   }
 
   const onEnd = ({ pass, answer }: { pass: boolean, answer?: CorrectA }) => {
     if (!pass && answer) {
       setFailedAnswer(answer)
     } else {
-      setFailedAnswer(undefined)
-      setCanton(undefined)
+      setSuccess(true)
     }
+  }
+
+  const onRestart = () => {
+    setFailedAnswer(undefined)
+    setCanton(getRandomCanton(canton ? canton.id : undefined))
+    setSuccess(false)
   }
 
   return (
@@ -43,12 +50,18 @@ const App = () => {
           <CorrectAnswer
             answer={failedAnswer}
             lang={lang}
-            onRestart={onStart}
+            onRestart={onRestart}
           />
         )}
       />
       <If
-        condition={Boolean(canton) && !failedAnswer}
+        condition={success}
+        isTrue={(
+          <Success lang={lang} onRestart={onRestart} />
+        )}
+      />
+      <If
+        condition={Boolean(canton) && !failedAnswer && !success}
         isTrue={(
           <Question
             canton={canton}

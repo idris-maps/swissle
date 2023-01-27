@@ -45,7 +45,7 @@ const CorrectAnswer = ({ answer, lang, onRestart }: Props) => (
       )}
     />
     <If
-      condition={isFlag(answer)}
+      condition={!isArrayOfStrings(answer) && isFlag(answer)}
       isTrue={<FlagAnswer answer={answer} />}
       isFalse={<p class="correct-answer">{String(answer)}</p>}
     />

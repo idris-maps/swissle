@@ -46,7 +46,11 @@ export const getCantonById = (id: string) => {
 
 export const getCantonName = (lang: Lang, id: string) => getCantonById(id).name[lang]
 
-export const getRandomCanton = () => getRandom(cantons)
+export const getRandomCanton = (id?: string) => {
+  const d = getRandom(cantons)
+  if (d.id !== id) { return d; }
+  return getRandomCanton(id)
+}
 
 const abbrevs = cantons.map(d => d.id)
 
